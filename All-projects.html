@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="allprojectmainpage">
+        <div class="allprojecttopsec">
+            <div class="allprojectbackbtn">
+                <img src="left-arrow-back-svgrepo-com.svg" alt="">
+                <span>Kshantu Syon</span>
+            </div>
+
+            <p class="allprojecttitletext">All Projects</p>
+        </div>
+
+
+        <div class="allprojecttablesection">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Project</td>
+                        <td>Made at</td>
+                        <td>Built with</td>
+                        <td>Link</td>
+                    </tr>
+                </thead>
+                <tbody id="projectTableBody">
+                    <!-- <tr>
+                        <td>github finder</td>
+                        <td>Personal</td>
+                        <td>
+                            <div class="projectbuiltwithtabs">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>JavaScript</span>
+                                <span>Github API</span>
+                            </div>
+                        </td>
+                        <td class="projectredirectlink"><p>Githubfinder.com</p> <img src="arrow-up-right-svgrepo-com.svg" alt=""></td>
+                    </tr>
+
+                    <tr>
+                        <td>github finder</td>
+                        <td>Personal</td>
+                        <td>
+                            <div class="projectbuiltwithtabs">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>JavaScript</span>
+                                <span>Github API</span>
+                            </div>
+                        </td>
+                        <td class="projectredirectlink"><p>Githubfinder.com</p> <img src="arrow-up-right-svgrepo-com.svg" alt=""></td>
+                    </tr>
+
+                    <tr>
+                        <td>github finder</td>
+                        <td>Personal</td>
+                        <td>
+                            <div class="projectbuiltwithtabs">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>JavaScript</span>
+                                <span>Github API</span>
+                            </div>
+                        </td>
+                        <td class="projectredirectlink"><p>Githubfinder.com</p> <img src="arrow-up-right-svgrepo-com.svg" alt=""></td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    
+    <script>
+        document.querySelector(".allprojectbackbtn").addEventListener("click", function(){
+            window.location = "/index.html"
+        })
+    </script>
+
+    <script>
+  fetch('projects.json')
+    .then(response => response.json())
+    .then(data => {
+      const tbody = document.getElementById('projectTableBody');
+
+      data.forEach(project => {
+
+        const isMobile = window.innerWidth < 550;
+        const displayText = isMobile ? "link" : project.linkText;
+
+        const tr = document.createElement('tr');
+
+        tr.innerHTML = `
+          <td>${project.title}</td>
+          <td>${project.type}</td>
+          <td>
+            <div class="projectbuiltwithtabs">
+              ${project.builtWith.map(tech => `<span>${tech}</span>`).join('')}
+            </div>
+          </td>
+          <td class="projectredirectlink">
+            <p>${displayText}</p>
+            <img src="arrow-up-right-svgrepo-com.svg" alt="">
+          </td>
+        `;
+
+        // After the row is added, attach click event to the last td
+        const lastCell = tr.querySelector('.projectredirectlink');
+        lastCell.style.cursor = 'pointer';
+        lastCell.addEventListener('click', () => {
+          window.open(project.goToLink, '_blank');
+        });
+
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(error => console.error('Error loading project data:', error));
+</script>
+
+</body>
+</html>
